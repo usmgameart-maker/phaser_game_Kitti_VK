@@ -38,3 +38,22 @@ canvas {
     -webkit-touch-callout: none;
     display: block;
 }
+
+/* Фон в полноэкранном режиме — иначе браузер подставляет свой чёрный */
+:fullscreen {
+    background: #87CEEB;
+}
+
+:-webkit-full-screen {
+    background: #87CEEB;
+}
+
+:-ms-fullscreen {
+    background: #87CEEB;
+}
+
+#game-container:fullscreen,
+#game-container:-webkit-full-screen,
+#game-container:-ms-fullscreen {
+    background: #87CEEB;
+}
