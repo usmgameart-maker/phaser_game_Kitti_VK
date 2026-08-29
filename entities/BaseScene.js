@@ -36,52 +36,14 @@ export default class BaseScene extends Phaser.Scene
 
     saveProgress()
     {
-        const progressJson = JSON.stringify(window.gameProgress);
-
-        // Сохраняем в localStorage (резервная копия)
-        try {
-            localStorage.setItem('gameProgress', progressJson);
-        } catch (e) {}
-
-        // Сохраняем в VK Cloud Storage (если доступен)
-        if (window.vkBridge) {
-            try {
-                window.vkBridge.send('VKWebAppStorageSet', {
-                    key: 'gameProgress',
-                    value: progressJson
-                }).catch((e) => {
-                    console.log('Ошибка при сохранении в VK Storage:', e);
-                });
-            } catch (e) {
-                console.log('Ошибка при сохранении в VK Storage:', e);
-            }
-        }
+        try { localStorage.setItem('gameProgress', JSON.stringify(window.gameProgress)); }
+        catch (e) {}
     }
 
     resetProgress()
     {
         window.gameProgress = { score: 0, completed: {}, missionCompleted: false };
-
-        // Удаляем из localStorage
-        try {
-            localStorage.removeItem('gameProgress');
-        } catch (e) {}
-
-        // Удаляем из VK Cloud Storage (если доступен)
-        if (window.vkBridge) {
-            try {
-                window.vkBridge.send('VKWebAppStorageSet', {
-                    key: 'gameProgress',
-                    value: ''
-                }).catch((e) => {
-                    console.log('Ошибка при удалении из VK Storage:', e);
-                });
-            } catch (e) {
-                console.log('Ошибка при удалении из VK Storage:', e);
-            }
-        }
-    }
-
+        localStorage.removeItem('gameProgress');
     countAchievements()
     {
         const c = window.gameProgress.completed || {};
