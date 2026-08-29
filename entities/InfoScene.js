@@ -88,6 +88,5 @@ export default class InfoScene extends BaseScene
         cat.play('catBlink');
 
             return { cx, cy };
-
     }
 }
