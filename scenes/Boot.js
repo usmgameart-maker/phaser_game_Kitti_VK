@@ -39,8 +39,11 @@ export default class Boot extends Phaser.Scene
                     const result = await vk.send('VKWebAppStorageGet', { keys: ['gameProgress'] });
                     if (result && result.keys && result.keys.length > 0) {
                         const key = result.keys[0];
-                        gameProgressData = JSON.parse(key.value);
-                        console.log('Прогресс загружен из VK Cloud Storage');
+                        // Проверяем что value не пуст перед парсингом
+                        if (key.value && key.value.trim() && key.value !== '""') {
+                            gameProgressData = JSON.parse(key.value);
+                            console.log('Прогресс загружен из VK Cloud Storage');
+                        }
                     }
                 } catch (e) {
                     console.log('Ошибка загрузки из VK Storage:', e);
