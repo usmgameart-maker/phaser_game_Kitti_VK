@@ -34,16 +34,47 @@ export default class BaseScene extends Phaser.Scene
         this.saveProgress();
     }
 
+    // saveProgress()
+    // {
+    //     try { localStorage.setItem('gameProgress', JSON.stringify(window.gameProgress)); }
+    //     catch (e) {}
+    // }
+
+    // resetProgress()
+    // {
+    //     window.gameProgress = { score: 0, completed: {}, missionCompleted: false };
+    //     localStorage.removeItem('gameProgress');
+    // }
     saveProgress()
     {
-        try { localStorage.setItem('gameProgress', JSON.stringify(window.gameProgress)); }
+        const json = JSON.stringify(window.gameProgress);
+
+        // локально — быстро, и как запасной вариант офлайн
+        try { localStorage.setItem('gameProgress', json); }
         catch (e) {}
+
+        // в VK Storage — чтобы прогресс был одинаковым на всех платформах
+        if (window.vkBridge)
+        {
+            window.vkBridge.send('VKWebAppStorageSet', {
+                key: 'gameProgress',
+                value: json
+            }).catch((e) => console.warn('Не удалось сохранить прогресс в VK Storage', e));
+        }
     }
 
     resetProgress()
     {
         window.gameProgress = { score: 0, completed: {}, missionCompleted: false };
         localStorage.removeItem('gameProgress');
+
+        if (window.vkBridge)
+        {
+            window.vkBridge.send('VKWebAppStorageSet', {
+                key: 'gameProgress',
+                value: JSON.stringify(window.gameProgress)
+            }).catch(() => {});
+        }
     }
 
     countAchievements()
