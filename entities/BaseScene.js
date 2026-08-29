@@ -44,6 +44,8 @@ export default class BaseScene extends Phaser.Scene
     {
         window.gameProgress = { score: 0, completed: {}, missionCompleted: false };
         localStorage.removeItem('gameProgress');
+    }
+
     countAchievements()
     {
         const c = window.gameProgress.completed || {};
