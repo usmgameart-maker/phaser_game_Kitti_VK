@@ -17,5 +17,6 @@ export function showInterstitialAd()
     lastAdTime = now;
 
     return vkBridge.send('VKWebAppShowNativeAds', { ad_format: 'interstitial' })
-        .catch(() => null);
+        .then((res) => { console.log('[Ads] показ рекламы, ответ VK:', res); return res; })
+        .catch((err) => { console.warn('[Ads] реклама не показалась, причина:', err); return null; });
 }
