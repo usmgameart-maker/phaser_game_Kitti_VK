@@ -1,4 +1,5 @@
 import BaseScene from '../entities/BaseScene.js';
+import { showInterstitialAd } from '../entities/Ads.js';
 
 export default class WinScene extends BaseScene
 {
@@ -120,8 +121,10 @@ export default class WinScene extends BaseScene
 
          // обработка клика по кнопке (по контейнеру, чтобы и картинка, и текст были кликабельными)
         container2.on('pointerdown', () => {
+            showInterstitialAd().finally(() => {
                 this.scene.start('Loading', {
-                nextScene: this.nextScene // куда идти дальше
+                    nextScene: this.nextScene // куда идти дальше
+                });
             });
         });
 
