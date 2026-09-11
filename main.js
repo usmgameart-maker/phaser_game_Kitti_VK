@@ -44,7 +44,8 @@ const config = {
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        expandParent: true
+        expandParent: true,
+        fullscreenTarget: 'game-container' // чтобы в полноэкранном режиме разворачивался весь контейнер (с кнопкой "Меню"), а не только canvas
     },
 
 

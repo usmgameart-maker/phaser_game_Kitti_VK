@@ -68,6 +68,17 @@
         window.hideBackButton = function () { backBtn.style.display = 'none'; };
 
         window.addEventListener('resize', positionBackButton);
+
+        // вход/выход из полноэкранного режима не всегда вовремя присылает resize,
+        // плюс Phaser пересчитывает размер canvas не мгновенно — небольшая задержка,
+        // чтобы взять уже финальные размеры, а не промежуточные
+        function repositionAfterFullscreenChange()
+        {
+            setTimeout(positionBackButton, 60);
+        }
+
+        document.addEventListener('fullscreenchange', repositionAfterFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', repositionAfterFullscreenChange);
     </script>
 
 </body>
