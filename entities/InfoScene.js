@@ -87,6 +87,16 @@ export default class InfoScene extends BaseScene
         cat.setDepth(5);
         cat.play('catBlink');
 
+        // видимая кнопка возврата в меню (не только ESC)
+        if (config.showMenuButton !== false)
+        {
+            this.addMenuButton();
+        }
+        else
+        {
+            this.hideMenuButton(); // мы уже в меню — незачем показывать кнопку "в меню"
+        }
+
             return { cx, cy };
     }
 }

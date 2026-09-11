@@ -57,3 +57,25 @@ canvas {
 #game-container:-ms-fullscreen {
     background: #87CEEB;
 }
+
+/* Кнопка "Меню" — отдельный HTML-слой поверх canvas, чтобы никогда не перекрываться игровыми объектами */
+#back-to-menu-btn {
+    display: none; /* показывается через window.showBackButton() на игровых экранах */
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+    padding: 6px 18px;
+    background: rgba(29, 29, 58, 0.92);
+    color: #ffffff;
+    font-family: 'VCR';
+    font-size: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+#back-to-menu-btn:hover {
+    background: rgba(242, 34, 89, 0.95); /* фирменный розовый игры при наведении */
+}

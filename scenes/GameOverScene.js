@@ -78,6 +78,8 @@ export default class GameOverScene extends BaseScene
             text.setStyle({ color: '#ffffff' });
         });
 
+        // видимая кнопка возврата в меню (не только ESC)
+        this.addMenuButton();
     }
 
     update()

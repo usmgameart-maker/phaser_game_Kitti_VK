@@ -11,7 +11,7 @@ export default class MainMenu extends InfoScene
     {
 
         // вызываем метод create() родительского класса
-        super.create('', { showLogo: false }); //ЗАГОЛОВОК ТУТ НЕ ПИШЕМ
+        super.create('', { showLogo: false, showMenuButton: false }); //ЗАГОЛОВОК ТУТ НЕ ПИШЕМ, КНОПКУ МЕНЮ ТУТ НЕ ПОКАЗЫВАЕМ (мы уже в меню)
 
         // =====================
         // МУЗЫКА

@@ -166,6 +166,9 @@ export default class WinScene extends BaseScene
                 ease: 'Sine.easeInOut'
             });
         }
+
+        // видимая кнопка возврата в меню (не только ESC)
+        this.addMenuButton();
     }
 
     update()

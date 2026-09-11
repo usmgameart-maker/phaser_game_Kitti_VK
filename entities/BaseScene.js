@@ -214,11 +214,8 @@ export default class BaseScene extends Phaser.Scene
             color: '#1d1d3a'
         }).setOrigin(0.5, 0);
 
-        this.fpsText = this.add.text(17, 40, '', {
-            fontFamily: 'VCR',
-            fontSize: '10px',
-            color: '#ffffff'
-        });
+        // FPS-счётчик убран из продакшена — на его месте теперь кнопка "Меню"
+        // (это место проверено — там никогда не появляются игровые предметы)
 
         // =====================
         // НИЖНЯЯ ПЛАТФОРМА
@@ -294,6 +291,25 @@ export default class BaseScene extends Phaser.Scene
             }
         });
 
+        // видимая кнопка "Меню" (не только ESC)
+        this.addMenuButton();
+    }
+
+    // =====================
+    // ВИДИМАЯ КНОПКА "МЕНЮ" (возврат в главное меню кликом, не только по ESC)
+    // отдельный HTML-элемент поверх canvas (см. index.html) — так она никогда
+    // не перекрывается игровыми объектами, которые рисуются внутри самого Phaser
+    // =====================
+    addMenuButton(x = 15, y = 40)
+    {
+        if (typeof window.showBackButton === 'function')
+            window.showBackButton(x, y);
+    }
+
+    hideMenuButton()
+    {
+        if (typeof window.hideBackButton === 'function')
+            window.hideBackButton();
     }
 
     update()

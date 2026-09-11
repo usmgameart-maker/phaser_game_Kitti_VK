@@ -12,10 +12,62 @@
 </head>
 <body>
 
+    <div id="game-container">
+        <button id="back-to-menu-btn" type="button">‹ МЕНЮ</button>
+    </div>
+
     <script type="module" src="main.js"></script>
 
     <script>
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+        // кнопка "Меню" — живёт поверх Phaser-холста отдельным HTML-элементом,
+        // поэтому никогда не перекрывается игровыми объектами (они рисуются внутри canvas)
+        var backBtn = document.getElementById('back-to-menu-btn');
+
+        backBtn.addEventListener('click', function () {
+            if (!window.game) return;
+
+            // клик идёт снаружи Phaser, поэтому нужно явно остановить все
+            // текущие активные сцены — иначе они продолжат работать и
+            // рисоваться поверх/под новым меню (само меню при этом всё
+            // равно запускается, просто визуально закрыто старой сценой)
+            window.game.scene.getScenes(true).forEach(function (scene) {
+                window.game.scene.stop(scene.scene.key);
+            });
+
+            window.game.scene.start('MainMenu');
+        });
+
+        // кнопка ставится по игровым координатам (0-800 x, 0-600 y — как в самом
+        // Phaser), а не по пикселям экрана. Холст может показываться на экране
+        // любого размера (в VK, на Go Live, в широком/узком окне) — поэтому
+        // координаты пересчитываются пропорционально реальному размеру холста
+        // (через getBoundingClientRect), иначе кнопка "улетает" мимо картинки
+        var backBtnGameX = 15;
+        var backBtnGameY = 15;
+
+        function positionBackButton()
+        {
+            if (!window.game || !window.game.canvas) return;
+
+            var rect = window.game.canvas.getBoundingClientRect();
+            var scaleX = rect.width / 800;
+            var scaleY = rect.height / 600;
+
+            backBtn.style.left = (rect.left + backBtnGameX * scaleX) + 'px';
+            backBtn.style.top = (rect.top + backBtnGameY * scaleY) + 'px';
+        }
+
+        window.showBackButton = function (gameX, gameY) {
+            backBtnGameX = (typeof gameX === 'number') ? gameX : 15;
+            backBtnGameY = (typeof gameY === 'number') ? gameY : 15;
+            positionBackButton();
+            backBtn.style.display = 'block';
+        };
+        window.hideBackButton = function () { backBtn.style.display = 'none'; };
+
+        window.addEventListener('resize', positionBackButton);
     </script>
 
 </body>
